@@ -11,7 +11,6 @@ jobs:  # 18007
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.TOKEN }}
-          persist-credentials: true
       - name: sync_sub
         run: |
           perl -pi -e "s/^(jobs:)(.*)$/\$1  # $RANDOM/g" .github/workflows/sync_sub.yml
