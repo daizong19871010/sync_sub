@@ -1,0 +1,15 @@
+name: sync_sub
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/10 * * * *'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: sync_sub
+        run: |
+          wget --output-document All_Configs_Sub.txt https://github.com/Epodonios/v2ray-configs/raw/main/All_Configs_Sub.txt
+          curl -X POST -F "file=@$(pwd)/All_Configs_Sub.txt;filename=All_Configs_Sub.txt" https://aws.keyso.uk/api/upload
+
