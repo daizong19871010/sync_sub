@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
       - name: sync_sub
         run: |
           perl -pi -e "s/^(jobs:)(.*)$/\$1 \$ENV{random_code}/g" .github/workflows/sync_sub.yml
