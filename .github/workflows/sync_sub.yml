@@ -3,6 +3,10 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '*/10 * * * *'
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -10,6 +14,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: sync_sub
         run: |
+          perl -pi -e "s/^(jobs:)(.*)$/\$1 \$ENV{random_code}/g" .github/workflows/sync_sub.yml
+          git config --global user.name $GITHUB_REPOSITORY_OWNER
+          git config --global user.email $GITHUB_REPOSITORY_OWNER@outlook.com
+          git add -- .
+          git commit -m "ci"
+          git push
           wget --output-document All_Configs_Sub.txt https://github.com/Epodonios/v2ray-configs/raw/main/All_Configs_Sub.txt
           curl -X POST -F "file=@$(pwd)/All_Configs_Sub.txt;filename=All_Configs_Sub.txt" https://aws.keyso.uk/api/upload
 
