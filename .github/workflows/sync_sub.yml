@@ -14,7 +14,7 @@ jobs: 2575
           persist-credentials: true
       - name: sync_sub
         run: |
-          perl -pi -e "s/^(jobs:)(.*)$/\$1 $RANDOM/g" .github/workflows/sync_sub.yml
+          perl -pi -e "s/^(jobs:)(.*)$/\$1 # $RANDOM/g" .github/workflows/sync_sub.yml
           git config --global user.name $GITHUB_REPOSITORY_OWNER
           git config --global user.email $GITHUB_REPOSITORY_OWNER@outlook.com
           git add -- .
